@@ -1,0 +1,46 @@
+<ROSETTASCRIPTS>
+	<SCOREFXNS>
+                <ScoreFunction name="r15" weights="ref2015" >
+		</ScoreFunction>
+	</SCOREFXNS>
+	<RESIDUE_SELECTORS>
+	</RESIDUE_SELECTORS>
+	<TASKOPERATIONS>
+	</TASKOPERATIONS>
+	<MOVE_MAP_FACTORIES>
+	</MOVE_MAP_FACTORIES>
+	<SIMPLE_METRICS>
+	</SIMPLE_METRICS>
+	<FILTERS>
+	</FILTERS>
+	<MOVERS>
+	<MinMover name="min" 
+	type="lbfgs_armijo_nonmonotone" 
+	tolerance="0.0001" 
+	bb="true" 
+	omega="true" 
+	chi="true" 
+	scorefxn="r15" 
+	max_iter="1000">
+                <MoveMap bb="True" chi="False" jump="True"/>
+        </MinMover>
+
+	<Small name="temperature_backbone"
+	scorefxn="r15"
+       	temperature="1.5"
+      	nmoves="1"
+       	angle_max="140.0"
+       	preserve_detailed_balance="True">
+        </Small>
+	<SetTorsion name="phi_psi">
+	     <Torsion residue="ALL" torsion_name="phi" angle="random" />
+	     <Torsion residue="ALL" torsion_name="psi" angle="random" />
+	</SetTorsion>
+	</MOVERS>
+	<PROTOCOLS>
+		<Add mover="min" />
+		<Add mover="temperature_backbone" />
+                <Add mover="min" />
+	</PROTOCOLS>
+	<OUTPUT />
+</ROSETTASCRIPTS>
